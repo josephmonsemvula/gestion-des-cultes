@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#0b1f3a">
+
+    <title>Gestion des Cultes</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+
+<!-- =====================================================
+     ÉCRAN DE CHARGEMENT
+===================================================== -->
+
+<div id="loader">
+
+    <div class="loader-logo">
+        ✝
+    </div>
+
+    <div class="loader-spinner"></div>
+
+    <h2>Gestion des Cultes</h2>
+
+    <p>Chargement de votre espace...</p>
+
+</div>
+
+
+<!-- =====================================================
+     APPLICATION
+===================================================== -->
+
+<div id="app">
+
+    <!-- BARRE DU HAUT -->
+
+    <header class="topbar">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                ✝
+            </div>
+
+            <div>
+                <h1>Gestion des Cultes</h1>
+                <span>Administration financière</span>
+            </div>
+
+        </div>
+
+
+        <div class="top-actions">
+
+            <button id="installBtn"
+                    class="install-btn">
+                📲 Installer
+            </button>
+
+            <button id="themeBtn"
+                    class="icon-btn"
+                    title="Changer le thème">
+                🌙
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- MENU -->
+
+    <nav class="menu">
+
+        <button class="menu-btn active"
+                data-page="dashboard">
+            📊
+            <span>Tableau de bord</span>
+        </button>
+
+        <button class="menu-btn"
+                data-page="cultes">
+            ⛪
+            <span>Cultes</span>
+        </button>
+
+        <button class="menu-btn"
+                data-page="rapports">
+            📈
+            <span>Rapports</span>
+        </button>
+
+        <button class="menu-btn"
+                data-page="sauvegarde">
+            💾
+            <span>Sauvegarde</span>
+        </button>
+
+    </nav>
+
+
+    <!-- =================================================
+         CONTENU
+    ================================================= -->
+
+    <main class="content">
+
+
+        <!-- =============================================
+             DASHBOARD
+        ============================================== -->
+
+        <section id="dashboard"
+                 class="page active">
+
+            <div class="welcome">
+
+                <div>
+                    <p class="small-title">
+                        ESPACE ADMINISTRATION
+                    </p>
+
+                    <h2>
+                        Tableau de bord
+                    </h2>
+
+                    <p>
+                        Suivez les finances de vos cultes
+                        simplement et efficacement.
+                    </p>
+                </div>
+
+                <div class="dashboard-date"
+                     id="todayDate">
+                </div>
+
+            </div>
+
+
+            <!-- CARTES STATISTIQUES -->
+
+            <div class="stats-grid">
+
+                <div class="stat-card blue">
+
+                    <div class="stat-icon">
+                        💰
+                    </div>
+
+                    <div>
+                        <span>Total général</span>
+                        <strong id="statTotal">
+                            0 FC
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card red">
+
+                    <div class="stat-icon">
+                        💸
+                    </div>
+
+                    <div>
+                        <span>Dépenses</span>
+                        <strong id="statDepenses">
+                            0 FC
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card green">
+
+                    <div class="stat-icon">
+                        🏦
+                    </div>
+
+                    <div>
+                        <span>Solde caisse</span>
+                        <strong id="statSolde">
+                            0 FC
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card gold">
+
+                    <div class="stat-icon">
+                        ⛪
+                    </div>
+
+                    <div>
+                        <span>Nombre de cultes</span>
+                        <strong id="statCultes">
+                            0
+                        </strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MOIS -->
+
+            <div class="dashboard-grid">
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <h3>
+                                📅 Résumé du mois
+                            </h3>
+
+                            <p>
+                                Situation financière du mois actuel
+                            </p>
+                        </div>
+
+                        <select id="monthSelector">
+
+                            <option value="1">Janvier</option>
+                            <option value="2">Février</option>
+                            <option value="3">Mars</option>
+                            <option value="4">Avril</option>
+                            <option value="5">Mai</option>
+                            <option value="6">Juin</option>
+                            <option value="7">Juillet</option>
+                            <option value="8">Août</option>
+                            <option value="9">Septembre</option>
+                            <option value="10">Octobre</option>
+                            <option value="11">Novembre</option>
+                            <option value="12">Décembre</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="monthly-result">
+
+                        <div>
+                            <span>Total général</span>
+                            <strong id="monthTotal">
+                                0 FC
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>Dépenses</span>
+                            <strong id="monthExpenses">
+                                0 FC
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>Solde</span>
+                            <strong id="monthBalance">
+                                0 FC
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RAPPORT ANNUEL -->
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <h3>
+                                📊 Rapport annuel
+                            </h3>
+
+                            <p>
+                                Résumé de l'année
+                            </p>
+
+                        </div>
+
+                        <select id="yearSelector">
+                        </select>
+
+                    </div>
+
+
+                    <div class="year-result">
+
+                        <div class="year-number">
+
+                            <strong id="yearTotal">
+                                0 FC
+                            </strong>
+
+                            <span>
+                                Total général
+                            </span>
+
+                        </div>
+
+                        <div class="progress-container">
+
+                            <div class="progress-bar">
+                                <div id="progressBar"></div>
+                            </div>
+
+                            <span id="progressText">
+                                0%
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- DERNIERS CULTES -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h3>
+                            🕊️ Derniers cultes
+                        </h3>
+
+                        <p>
+                            Les dernières opérations enregistrées
+                        </p>
+                    </div>
+
+                    <button class="primary-btn"
+                            onclick="showPage('cultes')">
+                        + Nouveau culte
+                    </button>
+
+                </div>
+
+
+                <div id="recentCultes"
+                     class="recent-list">
+
+                    <div class="empty-state">
+                        Aucun culte enregistré.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =============================================
+             CULTES
+        ============================================== -->
+
+        <section id="cultes"
+                 class="page">
+
+            <div class="page-title">
+
+                <div>
+
+                    <p class="small-title">
+                        ENREGISTREMENT
+                    </p>
+
+                    <h2>
+                        Gestion des cultes
+                    </h2>
+
+                    <p>
+                        Enregistrez les recettes et dépenses
+                        de chaque culte.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- FORMULAIRE -->
+
+            <div class="panel form-panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h3 id="formTitle">
+                            ➕ Nouveau culte
+                        </h3>
+
+                        <p>
+                            Remplissez les informations ci-dessous.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <form id="culteForm">
+
+                    <input type="hidden"
+                           id="editId">
+
+
+                    <div class="form-grid">
+
+
+                        <!-- DATE -->
+
+                        <div class="input-group">
+
+                            <label>
+                                📅 Date du culte
+                            </label>
+
+                            <input type="date"
+                                   id="date"
+                                   required>
+
+                        </div>
+
+
+                        <!-- PREDICATEUR -->
+
+                        <div class="input-group">
+
+                            <label>
+                                🎤 Prédicateur
+                            </label>
+
+                            <input type="text"
+                                   id="predicateur"
+                                   placeholder="Nom du prédicateur"
+                                   required>
+
+                        </div>
+
+
+                        <!-- OFFRANDES -->
+
+                        <div class="input-group">
+
+                            <label>
+                                💰 Offrandes
+                            </label>
+
+                            <input type="number"
+                                   id="offrandes"
+                                   min="0"
+                                   value="0">
+
+                        </div>
+
+
+                        <!-- ACTIONS DE GRÂCE -->
+
+                        <div class="input-group">
+
+                            <label>
+                                🙏 Actions de grâce
+                            </label>
+
+                            <input type="number"
+                                   id="actionsGrace"
+                                   min="0"
+                                   value="0">
+
+                        </div>
+
+
+                        <!-- OFFRANDES PROPHETE -->
+
+                        <div class="input-group special">
+
+                            <label>
+                                ⭐ Offrandes de prophète
+                            </label>
+
+                            <input type="number"
+                                   id="offrandesProphete"
+                                   min="0"
+                                   value="0">
+
+                        </div>
+
+
+                        <!-- CONSTRUCTION -->
+
+                        <div class="input-group">
+
+                            <label>
+                                🏗️ Construction
+                            </label>
+
+                            <input type="number"
+                                   id="construction"
+                                   min="0"
+                                   value="0">
+
+                        </div>
+
+
+                        <!-- ALLIANCE -->
+
+                        <div class="input-group">
+
+                            <label>
+                                🤝 Alliance
+                            </label>
+
+                            <input type="number"
+                                   id="alliance"
+                                   min="0"
+                                   value="0">
+
+                        </div>
+
+
+                        <!-- CARTES DE SOUTIEN -->
+
+                        <div class="input-group">
+
+                            <label>
+                                🎫 Cartes de soutien
+                            </label>
+
+                            <input type="number"
+                                   id="cartesSoutien"
+                                   min="0"
+                                   value="0">
+
+                        </div>
+
+
+                        <!-- DIME -->
+
+                        <div class="input-group">
+
+                            <label>
+                                💵 Dîme
+                            </label>
+
+                            <input type="number"
+                                   id="dime"
+                                   min="0"
+                                   value="0">
+
+                        </div>
+
+
+                        <!-- CARBURANT -->
+
+                        <div class="input-group">
+
+                            <label>
+                                ⛽ Carburant
+                            </label>
+
+                            <input type="number"
+                                   id="carburant"
+                                   min="0"
+                                   value="0">
+
+                        </div>
+
+
+                        <!-- AUTRES -->
+
+                        <div class="input-group">
+
+                            <label>
+                                📦 Autres
+                            </label>
+
+                            <input type="number"
+                                   id="autres"
+                                   min="0"
+                                   value="0">
+
+                        </div>
+
+
+                        <!-- ENVELOPPES -->
+
+                        <div class="input-group">
+
+                            <label>
+                                ✉️ Enveloppes
+                            </label>
+
+                            <input type="number"
+                                   id="enveloppes"
+                                   min="0"
+                                   value="0">
+
+                        </div>
+
+
+                        <!-- DEPENSES -->
+
+                        <div class="input-group expense">
+
+                            <label>
+                                💸 Dépenses
+                            </label>
+
+                            <input type="number"
+                                   id="depenses"
+                                   min="0"
+                                   value="0">
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CALCUL AUTOMATIQUE -->
+
+                    <div class="calculation-box">
+
+                        <div>
+
+                            <span>
+                                TOTAL GÉNÉRAL
+                            </span>
+
+                            <strong id="previewTotal">
+                                0 FC
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                DÉPENSES
+                            </span>
+
+                            <strong id="previewDepenses">
+                                0 FC
+                            </strong>
+
+                        </div>
+
+
+                        <div class="balance-preview">
+
+                            <span>
+                                SOLDE CAISSE
+                            </span>
+
+                            <strong id="previewSolde">
+                                0 FC
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-actions">
+
+                        <button type="submit"
+                                class="primary-btn">
+
+                            💾 Enregistrer le culte
+
+                        </button>
+
+                        <button type="button"
+                                id="cancelEdit"
+                                class="secondary-btn"
+                                style="display:none">
+
+                            Annuler modification
+
+                        </button>
+
+                        <button type="reset"
+                                class="secondary-btn">
+
+                            Réinitialiser
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
+            <!-- RECHERCHE -->
+
+            <div class="panel">
+
+                <div class="search-row">
+
+                    <input type="text"
+                           id="searchInput"
+                           placeholder="🔎 Rechercher par prédicateur ou date...">
+
+                    <select id="filterYear">
+
+                        <option value="all">
+                            Toutes les années
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Date</th>
+                                <th>Prédicateur</th>
+                                <th>Total général</th>
+                                <th>Dépenses</th>
+                                <th>Offrande prophète</th>
+                                <th>Solde caisse</th>
+                                <th>Actions</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="cultesTable">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =============================================
+             RAPPORTS
+        ============================================== -->
+
+        <section id="rapports"
+                 class="page">
+
+            <div class="page-title">
+
+                <div>
+
+                    <p class="small-title">
+                        ANALYSE FINANCIÈRE
+                    </p>
+
+                    <h2>
+                        Rapports
+                    </h2>
+
+                    <p>
+                        Consultez les résultats par mois et par année.
+                    </p>
+
+                </div>
+
+                <button class="primary-btn"
+                        onclick="printReport()">
+
+                    🖨️ Imprimer
+
+                </button>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="report-controls">
+
+                    <select id="reportYear">
+                    </select>
+
+                    <select id="reportMonth">
+
+                        <option value="all">
+                            Toute l'année
+                        </option>
+
+                        <option value="1">Janvier</option>
+                        <option value="2">Février</option>
+                        <option value="3">Mars</option>
+                        <option value="4">Avril</option>
+                        <option value="5">Mai</option>
+                        <option value="6">Juin</option>
+                        <option value="7">Juillet</option>
+                        <option value="8">Août</option>
+                        <option value="9">Septembre</option>
+                        <option value="10">Octobre</option>
+                        <option value="11">Novembre</option>
+                        <option value="12">Décembre</option>
+
+                    </select>
+
+                </div>
+
+
+                <div id="reportContent">
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =============================================
+             SAUVEGARDE
+        ============================================== -->
+
+        <section id="sauvegarde"
+                 class="page">
+
+            <div class="page-title">
+
+                <div>
+
+                    <p class="small-title">
+                        PROTECTION DES DONNÉES
+                    </p>
+
+                    <h2>
+                        Sauvegarde
+                    </h2>
+
+                    <p>
+                        Protégez vos données contre les pertes.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="backup-grid">
+
+
+                <div class="backup-card">
+
+                    <div class="backup-icon">
+                        📥
+                    </div>
+
+                    <h3>
+                        Sauvegarder
+                    </h3>
+
+                    <p>
+                        Téléchargez toutes vos données
+                        dans un fichier sécurisé.
+                    </p>
+
+                    <button class="primary-btn"
+                            onclick="backupData()">
+
+                        Télécharger la sauvegarde
+
+                    </button>
+
+                </div>
+
+
+                <div class="backup-card">
+
+                    <div class="backup-icon">
+                        📤
+                    </div>
+
+                    <h3>
+                        Restaurer
+                    </h3>
+
+                    <p>
+                        Récupérez vos données depuis
+                        une sauvegarde précédente.
+                    </p>
+
+                    <input type="file"
+                           id="restoreFile"
+                           accept=".json">
+
+                    <button class="secondary-btn"
+                            onclick="restoreData()">
+
+                        Restaurer
+
+                    </button>
+
+                </div>
+
+
+                <div class="backup-card danger-card">
+
+                    <div class="backup-icon">
+                        ⚠️
+                    </div>
+
+                    <h3>
+                        Zone dangereuse
+                    </h3>
+
+                    <p>
+                        Effacer toutes les données
+                        enregistrées sur cet appareil.
+                    </p>
+
+                    <button class="danger-btn"
+                            onclick="deleteAllData()">
+
+                        Tout supprimer
+
+                    </button>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- NOTIFICATION -->
+
+    <div id="notification"
+         class="notification">
+
+        <span id="notificationIcon">
+            ✓
+        </span>
+
+        <span id="notificationText">
+            Opération réussie
+        </span>
+
+    </div>
+
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
